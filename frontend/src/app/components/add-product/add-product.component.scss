@@ -1,0 +1,235 @@
+.add-product-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-product-container h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.image-upload {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-upload label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.image-upload input {
+  margin-bottom: 8px;
+}
+
+
+.inactive-button {
+  background-color: #d3d3d3; /* Light grey */
+  color: #757575; /* Dark grey text */
+  pointer-events: auto; /* Still clickable */
+  cursor: pointer;
+}
+
+.active-button {
+  background-color: #007bff; /* Blue to indicate active */
+  color: white; /* White text */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Slight shadow for emphasis */
+}
+
+button {
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.dropzone{
+  height: 150px;
+  min-width: 100px;
+  display: table;
+  background-color: #eee;
+  width: 300px;
+  border: dashed 1px #aaa;
+  border-radius: 12px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-wrapper{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centered{
+  text-align: center;
+}
+
+.browse-button{
+  color: blue;
+  cursor: pointer;
+}
+
+.image-preview-container {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* Adjust to the size of the image */
+  max-width: 300px; /* Optional: Limit the image's max width */
+  margin-top: 16px;
+}
+
+.preview-image {
+  display: block;
+  width: 100%; /* Ensure the image scales with its container */
+  border-radius: 8px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.remove-image-button {
+  position: absolute;
+  top: 5px; /* Adjust for better positioning */
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Ensure it is above the image */
+}
+
+.remove-image-button:hover {
+  background-color: darkred;
+}
+
+.webhook-button {
+  width: 100%; /* Match width of form fields */
+  height: 56px; /* Same height as Material form fields */
+  border: 1px solid #ccc; /* Match the border of form fields */
+  border-radius: 4px; /* Same border-radius as form fields */
+  background-color: #d3d3d3; /* Initial inactive background color */
+  color: #757575; /* Inactive text color */
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 16px; /* Space between fields */
+}
+
+.webhook-button.active {
+  background-color: #007bff; /* Active background color */
+  color: white; /* Active text color */
+}
+
+.webhook-button:hover {
+  background-color: #0056b3; /* Darker shade on hover (active state) */
+}
+
+.add-product-button {
+  width: 100%; /* Match width of form fields */
+  height: 56px; /* Same height as Material form fields */
+  border: 1px solid #ccc; /* Match the border of form fields */
+  border-radius: 4px; /* Same border-radius as form fields */
+  background-color: #00C300; /* Bright green for active state */
+  color: white; /* White text for contrast */
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 16px; /* Space above the button */
+  margin-bottom: 16px; /* Space below the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visuals */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.add-product-button:hover {
+  background-color: #008F00; /* Darker green for hover */
+}
+
+.add-product-button:disabled {
+  background-color: #004C00; /* Dark green for disabled state */
+  color: #aaa; /* Light grey text for disabled state */
+  cursor: not-allowed; /* Indicate non-clickable */
+  box-shadow: none; /* Remove shadow when disabled */
+}
+
+.invalid-button {
+  background-color: #004C00; /* Dark green for invalid form */
+  color: #aaa; /* Light grey text for invalid state */
+  cursor: pointer; /* Keep pointer cursor */
+  box-shadow: none; /* Optional: Remove shadow for invalid state */
+}
+
+.line-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.line-with-text::before,
+.line-with-text::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid black;
+  margin: 0 10px;
+}
+
+.line-with-text span {
+  font-size: 1rem;
+  color: black;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.reset-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.reset-button:hover {
+  background-color: darkred;
+}
+
+.add-batch-button {
+  width: 100%; /* Match width of form fields */
+  height: 56px; /* Same height as Material form fields */
+  border: 1px solid #ccc; /* Match the border of form fields */
+  border-radius: 4px; /* Same border-radius as form fields */
+  background-color: #47acf3; /* Bright green for active state */
+  color: white; /* White text for contrast */
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 16px; /* Space above the button */
+  margin-bottom: 16px; /* Space below the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visuals */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.add-batch-button:hover {
+  background-color: #74c5f8; /* Darker green for hover */
+}

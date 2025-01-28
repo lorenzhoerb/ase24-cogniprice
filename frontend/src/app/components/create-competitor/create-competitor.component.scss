@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+/* Competitor form box styling */
+.competitor-form-box {
+  width: 90%;
+  max-width: 600px;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #4d8ebc;
+}
+
+/* Title styling */
+.competitor-title {
+  color: #FFFFFF;
+  font-size: 2rem;
+}
+
+/* Input groups */
+.input-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.line-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.line-with-text::before,
+.line-with-text::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #FFFFFF;
+  margin: 0 10px;
+}
+
+.line-with-text span {
+  font-size: 1rem;
+  color: #FFFFFF;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.disabled-button {
+  background-color: #b0b0b0; /* Light grey when disabled */
+  cursor: not-allowed;
+}
+
+.enabled-button {
+  background-color: #66c966;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover.enabled-button {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5); /* Enhanced shadow for hover */
+}
+input {
+  color: white !important;
+}
+
+mat-label {
+  color: white;
+}
+
+mat-hint {
+  font-size: 1.4em;
+  font-weight: 500;
+  color: red;
+}

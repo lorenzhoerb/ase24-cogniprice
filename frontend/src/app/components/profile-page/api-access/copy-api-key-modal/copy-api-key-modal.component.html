@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Generated API Key</h1>
+<div mat-dialog-content>
+  <p>Here is your new API Key. Please copy it and store it securely.</p>
+  <div class="copy-container">
+    <mat-form-field appearance="outline" class="api-key-field">
+      <input matInput [value]="apiKey" readonly />
+    </mat-form-field>
+    <div class="copy-icon-container">
+      <button mat-icon-button (click)="copyToClipboard()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <span class="copied-popup" *ngIf="copied">Copied!</span>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</div>

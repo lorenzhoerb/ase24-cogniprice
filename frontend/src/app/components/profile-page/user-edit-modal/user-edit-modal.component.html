@@ -1,0 +1,55 @@
+<h2 mat-dialog-title class="dialog-title">Edit Profile</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="editUserForm">
+    <!-- Username -->
+    <mat-form-field appearance="outline" class="dialog-field top-field" subscriptSizing="dynamic">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Enter username" required />
+      <mat-error *ngIf="editUserForm.get('username')?.touched && editUserForm.get('username')?.invalid">
+        <small *ngIf="editUserForm.get('username')?.errors?.['required']">Username is required.</small>
+        <small *ngIf="editUserForm.get('username')?.errors?.['pattern']">Username must be 3-15 characters with only letters, numbers, or underscores.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="dialog-field" subscriptSizing="dynamic">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" placeholder="Enter first name" required />
+      <mat-error class="input-hint" *ngIf="editUserForm.get('firstName')?.touched && editUserForm.get('firstName')?.invalid">
+        <small *ngIf="editUserForm.get('firstName')?.errors?.['required']">First Name is required.</small>
+        <small *ngIf="editUserForm.get('firstName')?.errors?.['pattern']">First Name can only contain letters.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="dialog-field" subscriptSizing="dynamic">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Enter last name" />
+      <mat-error class="input-hint" *ngIf="editUserForm.get('lastName')?.touched && editUserForm.get('lastName')?.invalid">
+        <small *ngIf="editUserForm.get('lastName')?.errors?.['required']">Last Name is required.</small>
+        <small *ngIf="editUserForm.get('lastName')?.errors?.['pattern']">Last Name can only contain letters.</small>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="dialog-field" subscriptSizing="dynamic">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" required />
+      <mat-error class="input-hint" *ngIf="editUserForm.get('email')?.touched && editUserForm.get('email')?.invalid">
+        <small *ngIf="editUserForm.get('email')?.errors?.['required']">Email is required.</small>
+        <small *ngIf="editUserForm.get('email')?.errors?.['email']">Enter a valid email address.</small>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button class="cancel-button" (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="editUserForm.invalid || !editUserForm.dirty"
+    (click)="saveChanges()"
+    class="save-button"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

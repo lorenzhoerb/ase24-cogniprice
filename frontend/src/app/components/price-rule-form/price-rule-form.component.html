@@ -1,0 +1,211 @@
+<div class="container">
+  <!-- Title -->
+  <h1 *ngIf="isEditMode">Price Rule</h1>
+  <h1 *ngIf="!isEditMode">Add Price Rule</h1>
+
+  <form [formGroup]="priceRuleForm" (ngSubmit)="onSubmit()" (keydown.enter)="onSubmit()">
+
+    <div class="card">
+      <div class="price-rule">
+
+        <!-- Rule Name -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rule Name</mat-label>
+            <input matInput formControlName="name" placeholder="Rule Name" id="name" name="name"/>
+            <mat-error *ngIf="priceRuleForm.get('name')?.hasError('required')">
+              Rule Name is required.
+            </mat-error>
+            <mat-error *ngIf="priceRuleForm.get('name')?.hasError('minlength')">
+              Rule Name must be at least 3 characters long.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="row-title">Status</div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="isActive">
+                <mat-option value="ACTIVE">Active</mat-option>
+                <mat-option value="DISABLED">Disabled</mat-option>
+              </mat-select>
+              <mat-error *ngIf="priceRuleForm.get('isActive')?.hasError('required')">
+                Status is required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Position -->
+          <div class="row-title">Position</div>
+
+          <div formGroupName="position">
+            <mat-radio-group formControlName="type" name="position">
+              <div class="position-content">
+
+                <!-- Custom Position -->
+                <mat-radio-button value="CUSTOM"/>
+                <div class="position-custom-first-row" formGroupName="custom">
+                  <mat-form-field appearance="outline" class="small-field">
+                    <mat-label>Value</mat-label>
+                    <input matInput id="value" formControlName="value" type="number"/>
+                    <mat-error *ngIf="priceRuleForm.get('position.custom.value')?.hasError('required')">
+                      Value is required.
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="small-field">
+                    <mat-label>Unit</mat-label>
+                    <mat-select formControlName="unit">
+                      <mat-option value="EUR">€</mat-option>
+                      <mat-option value="PERCENTAGE">%</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Higher or Lower</mat-label>
+                    <mat-select formControlName="matchType">
+                      <mat-option value="HIGHER">Higher</mat-option>
+                      <mat-option value="LOWER">Lower</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="position-text">than</div>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Reference</mat-label>
+                    <mat-select formControlName="reference">
+                      <mat-option value="CHEAPEST">The Cheapest</mat-option>
+                      <mat-option value="AVERAGE">The Average</mat-option>
+                      <mat-option value="HIGHEST">The Highest</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <!-- Exact Position -->
+                <mat-radio-button value="EXACT"/>
+                <div class="position-custom" formGroupName="exact">
+                  <div class="position-text">Equals to</div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Reference</mat-label>
+                    <mat-select formControlName="reference">
+                      <mat-option value="CHEAPEST">The Cheapest</mat-option>
+                      <mat-option value="AVERAGE">The Average</mat-option>
+                      <mat-option value="HIGHEST">The Highest</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          <div class="divider"></div>
+
+
+          <!-- Scope -->
+          <div class="row-title">Scope</div>
+          <div class="scope-content">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Apply To</mat-label>
+              <mat-select formControlName="scope" (selectionChange)="clearScopeEntities()">
+                <mat-option value="PRODUCT">Product</mat-option>
+                <mat-option value="CATEGORY">Category</mat-option>
+              </mat-select>
+              <mat-error *ngIf="priceRuleForm.get('scope')?.hasError('required')">
+                Scope is required.
+              </mat-error>
+            </mat-form-field>
+
+            <app-category-search-selector
+              label="Select Categories"
+              *ngIf="priceRuleForm.get('scope')?.value === 'CATEGORY'"
+              (entitySelected)="onScopeEntitySelected($event)"
+            />
+            <app-store-product-selector
+              label="Select Products"
+              *ngIf="priceRuleForm.get('scope')?.value === 'PRODUCT'"
+              (entitySelected)="onScopeEntitySelected($event)"
+            />
+
+            <div *ngIf="scopeEntities.length !== 0" class="row-title">Applies To:</div>
+            <mat-selection-list #scopeEntitiesList>
+                <mat-list-option
+                  *ngFor="let scopeEntity of scopeEntities"
+                  [value]="scopeEntity"
+                  togglePosition="before"
+                >
+                  {{priceRuleForm.get('scope')?.value === 'CATEGORY' ? scopeEntity.category : scopeEntity.productName}}
+                </mat-list-option>
+            </mat-selection-list>
+            <!-- Button to remove selected items -->
+
+            <div style="display: flex; justify-content: flex-start">
+
+              <button
+                mat-button
+                type="button"
+                color="warn"
+                *ngIf="scopeEntitiesList.selectedOptions.selected.length > 0"
+                (click)="removeScopeEntities(scopeEntitiesList.selectedOptions.selected)"
+              >
+                Remove Selected
+              </button>
+            </div>
+
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Limits -->
+          <div class="row-title">Limits</div>
+          <div class="limits" formGroupName="limits">
+
+            <!-- Max Limit Label and Input -->
+            <div class="limit-row">
+              <mat-checkbox formControlName="hasMaxLimit">Max Limit</mat-checkbox>
+              <mat-form-field appearance="outline" class="small-field">
+                <mat-label>Value</mat-label>
+                <input matInput formControlName="maxLimit" id="maxValue" type="number"/>
+                <mat-error *ngIf="priceRuleForm.get('limits.maxLimit')?.hasError('required')">
+                  Max Limit value is required.
+                </mat-error>
+              </mat-form-field>
+              <div class="position-text">
+                €
+              </div>
+            </div>
+
+            <!-- Min Limit Label and Input -->
+            <div class="limit-row">
+              <mat-checkbox formControlName="hasMinLimit">Min Limit</mat-checkbox>
+              <mat-form-field appearance="outline" class="small-field">
+                <mat-label>Value</mat-label>
+                <input matInput formControlName="minLimit" id="minValue" type="number"/>
+                <mat-error *ngIf="priceRuleForm.get('limits.minLimit')?.hasError('required')">
+                  Min Limit value is required.
+                </mat-error>
+              </mat-form-field>
+              <div class="position-text">
+                €
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="button-wrapper">
+        <div class="submit-buttons">
+          <button mat-button type="button" id="price-rule-delete-button" *ngIf="isEditMode" (click)="onDelete()" color="warn">Delete</button>
+          <button mat-button type="button" id="price-rule-discard-button" (click)="onDiscard()">Discard</button>
+          <button mat-flat-button id="price-rule-submit-button" type="submit">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

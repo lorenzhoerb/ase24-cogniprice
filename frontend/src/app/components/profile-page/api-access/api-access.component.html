@@ -1,0 +1,76 @@
+<div>
+  <mat-grid-list cols="12" gutterSize="16px" rowHeight="50px">
+    <mat-grid-tile colspan="12" rowspan="2">
+      <h1 class="api-title mat-headline-3">Api Access</h1>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" ></mat-grid-tile>
+    <mat-grid-tile colspan="5" >
+      <button class="tab-button"
+              [class.active]="activeTab === 'documentation'"
+              (click)="switchTab('documentation')"
+      >
+        Documentation
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="5" >
+      <button class="tab-button"
+              [class.active]="activeTab === 'apiKey'"
+              (click)="switchTab('apiKey')"
+      >
+        Generate API Key
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div *ngIf="activeTab === 'apiKey'" class="api-key-section">
+    <mat-grid-list cols="12" gutterSize="16px" rowHeight="50px">
+      <mat-grid-tile colspan="12"></mat-grid-tile>
+      <mat-grid-tile colspan="3"></mat-grid-tile>
+      <mat-grid-tile colspan="9">
+        <div class="api-info-row">
+          <h3 class="api-key-title">API Key Information</h3>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3"></mat-grid-tile>
+      <mat-grid-tile colspan="9">
+        <div class="api-info-row">
+          <mat-icon class="pre-icon">key</mat-icon>
+          <span class="api-info-text"><b>API Key</b>: {{ apiKeyInfo?.maskedKey ?? 'No key yet' }}</span>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="3"></mat-grid-tile>
+      <mat-grid-tile colspan="9">
+        <div class="api-info-row">
+          <mat-icon class="pre-icon">schedule</mat-icon>
+          <span class="api-info-text"><b>Creation Date</b>: {{ formatDate(apiKeyInfo?.createdAt ?? '') }}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3"></mat-grid-tile>
+      <mat-grid-tile colspan="9">
+        <div class="api-info-row">
+          <mat-icon class="pre-icon">schedule</mat-icon>
+          <span class="api-info-text"><b>Expiration Date</b>: {{ formatDate(apiKeyInfo?.expiresAt ?? '') }}</span>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="3" rowspan="1"></mat-grid-tile>
+      <mat-grid-tile colspan="9" rowspan="1">
+        <div class="api-info-row">
+          <mat-icon class="pre-icon">key</mat-icon>
+          <span class="api-info-text"><b>Generate/Update Key:</b></span>
+          <button
+            class="generation-button"
+            mat-mini-fab aria-label="generate/update key"
+            (click)="generateApiKey()"
+          >
+            <mat-icon>cached</mat-icon>
+          </button>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </div>
+  <app-api-docs *ngIf="activeTab === 'documentation'"></app-api-docs>
+</div>
+

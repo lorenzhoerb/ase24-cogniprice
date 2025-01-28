@@ -1,0 +1,28 @@
+.swagger-ui .scheme-container {
+  background: rgba(183, 224, 251, 0.15);
+}
+
+.swagger-ui .url {
+  color: #5427f3;
+}
+
+.swagger-ui .url:hover {
+  color: #6d48f1;
+}
+
+.fetch-error-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh; /* Full viewport height */
+  text-align: center; /* Center-align text */
+  color: red; /* Error text color */
+  background-color: rgba(0, 0, 0, 0.05); /* Optional background for better visibility */
+}
+
+.fetch-error-container h3 {
+  font-size: 1.5rem; /* Adjust font size */
+  font-weight: bold;
+  margin: 0;
+}

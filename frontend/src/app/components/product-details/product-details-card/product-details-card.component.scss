@@ -1,0 +1,44 @@
+.price-card {
+  width: 300px;
+  padding: 16px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+
+  .small-title {
+    font-size: large;
+  }
+
+  .price-value {
+    font-weight: bold;
+  }
+
+  .competitor {
+    font-weight: bold;
+    color: gray;
+  }
+
+  mat-card-content {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .edit-btn {
+    background-color: #94c9ee;
+  }
+
+  .delete-btn {
+    background-color: #df7575;
+  }
+
+}

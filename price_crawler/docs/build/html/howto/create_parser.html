@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOWTO: Add a Website Parser &mdash; CogniPrice  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Web Crawler Configuration" href="../web_crawler/config.html" />
+    <link rel="prev" title="HOWTO: Update this documentation" href="update_docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CogniPrice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../howto.html">Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="web_crawler_setup.html">Setup the Web Crawler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update_docs.html">Update the Documentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create a new Website Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../web_crawler/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Parsers/impl/impl_parsers.html">Implemented Website Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Queue_Handler/impl/impl_msg_queues.html">Implemented Message Queue Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web_crawler.html">Web Crawler Functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Web Crawler Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers.html">Website Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../queue_handler.html">Message Queue Handler</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CogniPrice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../howto.html">Guides</a></li>
+      <li class="breadcrumb-item active">HOWTO: Add a Website Parser</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/howto/create_parser.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="howto-add-a-website-parser">
+<h1>HOWTO: Add a Website Parser<a class="headerlink" href="#howto-add-a-website-parser" title="Link to this heading"></a></h1>
+<p>To add a new parser to a web crawler, start by creating a Python file dedicated to handling the extraction logic for the new website. This file will contain the functionality required to parse the HTML source code and retrieve the relevant data.
+After implementing the extraction logic, update the web crawler to identify and route requests to the new parser based on the target website. This ensures the crawler can correctly apply the new logic when processing pages from the specified source.</p>
+<section id="create-a-new-parser-file">
+<h2>1. Create a new Parser File<a class="headerlink" href="#create-a-new-parser-file" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Create a New Parser File</strong>:
+The new file should be named based on the target website. The format for the filename is <cite>[WebsiteName]Parser.py</cite>, where <cite>[WebsiteName]</cite> is the name of the website you’re targeting (e.g., <cite>WebsiteNameParser.py</cite>).</p>
+<p>Place this new file in the directory:
+<code class="docutils literal notranslate"><span class="pre">24ws-ase-pr-qse-02/price_crawler/crawler/web_crawler/parsers</span></code>.</p>
+</li>
+<li><p><strong>Implement the `IParser` Interface</strong>:
+Your parser file must implement the <cite>IParser</cite> interface, which is located in the same directory. This interface defines the required methods for extracting data from the website’s HTML.</p></li>
+</ol>
+<p>Example Parser File: <cite>WebsiteNameParser.py</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">crawler.web_crawler.parsers.IParser</span> <span class="kn">import</span> <span class="n">IParser</span>
+<span class="kn">from</span> <span class="nn">crawler.web_crawler.parsers.ParserHelper</span> <span class="kn">import</span> <span class="n">ParserHelper</span>
+<span class="kn">from</span> <span class="nn">crawler.utils.ConfigReader</span> <span class="kn">import</span> <span class="n">ConfigReader</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">WebsiteNameParser</span><span class="p">(</span><span class="n">IParser</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConfigReader</span><span class="p">,</span> <span class="n">soup</span><span class="p">:</span> <span class="n">BeautifulSoup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the object with the provided logger, configuration, and BeautifulSoup object.</span>
+
+<span class="sd">        :param logger: The logger object used for logging messages and errors.</span>
+<span class="sd">        :type logger: logging.Logger</span>
+<span class="sd">        :param config: The configuration reader used for accessing settings.</span>
+<span class="sd">        :type config: ConfigReader</span>
+<span class="sd">        :param soup: The BeautifulSoup object used for parsing HTML content.</span>
+<span class="sd">        :type soup: BeautifulSoup</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">soup</span> <span class="o">=</span> <span class="n">soup</span>
+
+    <span class="k">def</span> <span class="nf">get_price</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts the product price from the HTML page</span>
+
+<span class="sd">        :return: The parsed price of the product, or None if no price is found or an error occurs.</span>
+<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :raises: Any exceptions raised during the HTML parsing will be logged and re-raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+
+
+    <span class="k">def</span> <span class="nf">get_currency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts the product&#39;s currency from the HTML page</span>
+
+<span class="sd">        :return: The currency of the product, or None if no currency is found or an error occurs.</span>
+<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :raises: Any exceptions raised during the HTML parsing will be logged and re-raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="implement-the-logic-for-the-new-parser">
+<h2>2. Implement the Logic for the new Parser<a class="headerlink" href="#implement-the-logic-for-the-new-parser" title="Link to this heading"></a></h2>
+<p>Implement the two methods from the <code class="docutils literal notranslate"><span class="pre">IParser</span></code> interface: <code class="docutils literal notranslate"><span class="pre">get_price</span></code> and <code class="docutils literal notranslate"><span class="pre">get_currency</span></code>. The HTML source code of the website is already parsed with BeautifulSoup and stored in the <code class="docutils literal notranslate"><span class="pre">self.soup</span></code> variable. You should use this variable to extract the required information, such as the product price and currency, from the website’s HTML structure. Make sure to handle any variations in the HTML and return appropriate values or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the data is not found.</p>
+</section>
+<section id="add-the-platform-identifier-logic">
+<h2>3. Add the Platform Identifier Logic<a class="headerlink" href="#add-the-platform-identifier-logic" title="Link to this heading"></a></h2>
+<p>To enable the crawler to recognize which parser should be used for a specific website, the logic must be implemented in the function <code class="docutils literal notranslate"><span class="pre">get_correct_parser(self,</span> <span class="pre">html_page:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">Optional[IParser]</span></code> located in the file:</p>
+<p><code class="docutils literal notranslate"><span class="pre">24ws-ase-pr-qse-02/price_crawler/crawler/web_crawler/PlatformIdentifier.py</span></code>.</p>
+<p>This function takes the HTML source code of a website as input. Within this function, you should implement the logic to identify a website based on its HTML source code.</p>
+<p>Once you are confident that the HTML source code belongs to the website you want to crawl, return an instance of the corresponding parser object.</p>
+<p>For example, if you want to return a <code class="docutils literal notranslate"><span class="pre">WoocommerceParser</span></code> object, the return of the parser object would look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">WoocommerceParser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">soup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="update_docs.html" class="btn btn-neutral float-left" title="HOWTO: Update this documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../web_crawler/config.html" class="btn btn-neutral float-right" title="Web Crawler Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, CogniPrice Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

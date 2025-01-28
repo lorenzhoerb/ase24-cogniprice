@@ -1,0 +1,36 @@
+
+
+<div class="modal-container">
+  <h4>{{ isCreating ? 'Create Webhook' : 'Edit Webhook' }}</h4>
+
+  <!-- Display Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="webhookForm">
+    <mat-form-field class="full-width">
+      <mat-label>Webhook URL</mat-label>
+      <input matInput formControlName="url" placeholder="Enter webhook URL" />
+      <mat-error *ngIf="webhookForm.get('url')?.invalid">
+        A valid webhook URL is required.
+      </mat-error>
+    </mat-form-field>
+
+
+    <!--
+    <mat-form-field class="full-width">
+      <mat-label>Secret (Optional)</mat-label>
+      <input matInput formControlName="secret" placeholder="Enter secret (if any)" />
+    </mat-form-field>
+    -->
+
+    <div class="actions">
+      <button mat-button color="primary" *ngIf="isCreating" (click)="createWebhook()" id="create-webhook-button">Create</button>
+      <button mat-button color="primary" *ngIf="!isCreating" (click)="updateWebhook()" id="update-webhook-button">Update</button>
+      <button mat-button color="warn" *ngIf="!isCreating" (click)="deleteWebhook()" id="delete-webhook-button">Delete</button>
+      <button mat-button color="accent" (click)="close()">Cancel</button>
+    </div>
+  </form>
+</div>
+

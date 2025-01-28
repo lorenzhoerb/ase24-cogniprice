@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+// @import 'materialize-css/dist/css/materialize.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+input {
+  background-color: transparent !important; /* Use '!important' sparingly for overriding */
+  opacity: 1 !important; /* Adjust opacity */
+  width: 100% !important; /* Ensure the input stretches to full width */
+  border: 2px solid #FFFFFF !important; /* Add a thick white border */
+  border-radius: 4px !important;
+  padding-left: 10px !important;
+}
+
+.cogniprice-title {
+  font-family: 'Volkhov', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 0 0 25px rgba(0, 0, 0, 0.4);
+
+  // Optional: Add a hover effect to make the shadow more dynamic
+  &:hover {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.5);
+  }
+}
+/*
+.cdk-overlay-pane {
+  margin: auto;
+  transform: none !important;
+}*/
+
+html, body { height: 100%; }
+body { margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* Ensures the gradient stays fixed on scroll */
+  background: linear-gradient(to bottom, #4d8ebc, #e3f2fd) fixed;
+  background-size: cover; /* Ensures it covers the entire page */
+}
+
+.mat-mdc-snack-bar-container {
+  &.snackbar-success {
+    --mdc-snackbar-container-color: #4caf50;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  &.snackbar-error {
+    --mdc-snackbar-container-color: #f44336;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.mat-mdc-snack-bar-container.fade-out {
+  opacity: 0 !important;
+}
+
+
+.custom-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.paginator-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.paginator-button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+.paginator-button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.paginator-info {
+  font-size: 1rem;
+  color: #333;
+}
+
+.page-jump-input {
+  width: fit-content !important;
+  padding: 0.2rem;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page-jump-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.no-results-message {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; /* Full height of the viewport */
+}
+

@@ -1,0 +1,48 @@
+/* Dialog Title Styling */
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between form fields */
+}
+
+.dialog-field {
+  width: 100%; /* Ensure full width */
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 16px; /* Space between buttons */
+}
+
+.cancel-button {
+  color: gray;
+  border-color: gray;
+  text-transform: none; /* Disable uppercase text */
+}
+
+.save-button {
+  text-transform: none; /* Disable uppercase text */
+  font-weight: bold;
+}
+
+.top-field {
+  margin-top: 10px;
+}
+
+mat-form-field {
+  margin-bottom: 20px; /* Default margin between fields */
+}
+
+mat-form-field.mat-form-field-invalid {
+  margin-bottom: 10px; /* Increase space for errors when field is invalid */
+}
+
+
+

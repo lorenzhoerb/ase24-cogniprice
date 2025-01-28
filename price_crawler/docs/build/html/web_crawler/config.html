@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Crawler Configuration &mdash; CogniPrice  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Implemented Parser" href="../Parsers/impl/impl_parsers.html" />
+    <link rel="prev" title="HOWTO: Add a Website Parser" href="../howto/create_parser.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CogniPrice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto.html">Guides</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general">[General]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kafka">[Kafka]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crawler">[Crawler]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selenium">[Selenium]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Parsers/impl/impl_parsers.html">Implemented Website Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Queue_Handler/impl/impl_msg_queues.html">Implemented Message Queue Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web_crawler.html">Web Crawler Functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Web Crawler Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers.html">Website Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../queue_handler.html">Message Queue Handler</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CogniPrice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Web Crawler Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/web_crawler/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="web-crawler-configuration">
+<h1>Web Crawler Configuration<a class="headerlink" href="#web-crawler-configuration" title="Link to this heading"></a></h1>
+<div class="line-block" id="config-label">
+<div class="line">This page outlines the configuration settings required for setting up and operating the web crawler. It is divided into multiple sections, each focusing on a specific aspect of the crawler’s functionality. Each setting includes its type, whether it is required, and examples to guide implementation.</div>
+<div class="line">This documentation serves as a comprehensive reference for configuring the web crawler to suit specific needs.</div>
+</div>
+<p id="config-file-label">The configuration file for the web crawler is located at: <strong>24ws-ase-pr-qse-02/price_crawler/config.ini</strong></p>
+<section id="general">
+<h2>[General]<a class="headerlink" href="#general" title="Link to this heading"></a></h2>
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-crawler_name">
+<span class="sig-name descname"><span class="pre">crawler_name</span></span><a class="headerlink" href="#confval-crawler_name" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CogniPrice</p>
+</dd>
+</dl>
+<p>The useragent name of the web crawler which is sent along with each request the crawler makes.</p>
+</dd></dl>
+
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-robots_crawl_timeout">
+<span class="sig-name descname"><span class="pre">robots_crawl_timeout</span></span><a class="headerlink" href="#confval-robots_crawl_timeout" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>7</p>
+</dd>
+</dl>
+<p>Specifies the time limit, in seconds, for how long the connection should wait before giving up when trying to access the robots.txt file for a website.</p>
+</dd></dl>
+
+</section>
+<section id="kafka">
+<h2>[Kafka]<a class="headerlink" href="#kafka" title="Link to this heading"></a></h2>
+<p>This configuration section is only required when working with the provided Kafka Client and Kafka Producer implementations.</p>
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-bootstrap_servers">
+<span class="sig-name descname"><span class="pre">bootstrap_servers</span></span><a class="headerlink" href="#confval-bootstrap_servers" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>127.0.0.1:9092</p>
+</dd>
+</dl>
+<p>Specifies the address (IP and port) of the Kafka broker that the client connects to, to discover the Kafka cluster.</p>
+</dd></dl>
+
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-kafka_topic">
+<span class="sig-name descname"><span class="pre">kafka_topic</span></span><a class="headerlink" href="#confval-kafka_topic" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>urls</p>
+</dd>
+</dl>
+<p>Specifies the Kafka topic name where messages (urls which should be crawled) will be consumed.</p>
+</dd></dl>
+
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-kafka_response_topic">
+<span class="sig-name descname"><span class="pre">kafka_response_topic</span></span><a class="headerlink" href="#confval-kafka_response_topic" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>crawl.response</p>
+</dd>
+</dl>
+<p>Specifies the Kafka topic name where the crawl job results will be published.</p>
+</dd></dl>
+
+</section>
+<section id="crawler">
+<h2>[Crawler]<a class="headerlink" href="#crawler" title="Link to this heading"></a></h2>
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-robots_txt_cache_time">
+<span class="sig-name descname"><span class="pre">robots_txt_cache_time</span></span><a class="headerlink" href="#confval-robots_txt_cache_time" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>600</p>
+</dd>
+</dl>
+<p>Specifies time in seconds for how long a cached entry for the robots.txt allowance/disallowance should be valid.</p>
+</dd></dl>
+
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-gemini_api_key">
+<span class="sig-name descname"><span class="pre">gemini_api_key</span></span><a class="headerlink" href="#confval-gemini_api_key" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Ouza87bb2MeRrwbb-NAEdIDugoihr_nyaabP9Yw</p>
+</dd>
+</dl>
+<p>Specifies the api key for the gemini ai.</p>
+</dd></dl>
+
+</section>
+<section id="selenium">
+<h2>[Selenium]<a class="headerlink" href="#selenium" title="Link to this heading"></a></h2>
+<dl class="std confval">
+<dt class="sig sig-object std" id="confval-page_load_timeout">
+<span class="sig-name descname"><span class="pre">page_load_timeout</span></span><a class="headerlink" href="#confval-page_load_timeout" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+<dt class="field-even">Required<span class="colon">:</span></dt>
+<dd class="field-even"><p>yes</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p>15000</p>
+</dd>
+</dl>
+<p>Specifies the time limit, in milliseconds, for how long the connection should wait before giving up when trying to download the html page of a website.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../howto/create_parser.html" class="btn btn-neutral float-left" title="HOWTO: Add a Website Parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Parsers/impl/impl_parsers.html" class="btn btn-neutral float-right" title="Implemented Parser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, CogniPrice Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

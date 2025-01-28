@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Producer Message Queue Interface &mdash; CogniPrice  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data Structures for a Message Object" href="MessageDataObjects.html" />
+    <link rel="prev" title="Client Message Queue Interface" href="IMessageQueueClient.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CogniPrice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web_crawler/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Parsers/impl/impl_parsers.html">Implemented Website Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl/impl_msg_queues.html">Implemented Message Queue Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web_crawler.html">Web Crawler Functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Web Crawler Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers.html">Website Parser</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../queue_handler.html">Message Queue Handler</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="IMessageQueueClient.html">Queue Client Interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Queue Producer Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MessageDataObjects.html">Message Queue Object Data Structures</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CogniPrice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../queue_handler.html">Message Queue Handler</a></li>
+      <li class="breadcrumb-item active">Producer Message Queue Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Queue_Handler/IMessageQueueProducer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="producer-message-queue-interface">
+<h1>Producer Message Queue Interface<a class="headerlink" href="#producer-message-queue-interface" title="Link to this heading"></a></h1>
+<p id="my-reference-label2">The <a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer">IMessageQueueProducer</a> class is an abstract base class that defines the essential methods for producing messages to a message queue, such as a Kafka broker. It provides the following key methods, which must be implemented by any subclass:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.connect">connect()</a>: Establishes a connection to the message source and returns a boolean indicating whether the connection was successfully established.</p></li>
+<li><p><a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.disconnect">disconnect()</a>: Closes the connection to the message source and releases any associated resources.</p></li>
+<li><p><a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.test_connection">test_connection()</a>: Tests the connection to the message source and returns a boolean indicating whether the connection is still active.</p></li>
+<li><p><a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_failure">send_failure(job_id, process_time, error_msg)</a>: Sends failure details for a job, including the job ID, processing time, and error message.</p></li>
+<li><p><a class="reference external" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_success">send_success(job_id, amount, currency, process_time)</a>: Sends success details for a job, including the job ID, crawled amount, currency, and processing time.</p></li>
+</ul>
+</div></blockquote>
+<p>This class serves as a blueprint for creating concrete implementations that handle sending job status messages to different message queues or brokers.</p>
+<dl class="py class" id="module-crawler.queue_handler.IMessageQueueProducer">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crawler.queue_handler.IMessageQueueProducer.</span></span><span class="sig-name descname"><span class="pre">IMessageQueueProducer</span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.connect">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.connect" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to establish a connection to the data source (e.g., Kafka broker).
+This method should be implemented by subclasses to initiate the connection and return
+the status of the connection attempt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the connection is successfully established, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.disconnect">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.disconnect" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to disconnect from the data source (e.g., Kafka broker).
+This method should be implemented by subclasses to properly handle the disconnection process
+and release any resources associated with the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_failure">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">send_failure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><span class="pre">StoreProductId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_failure" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to send failure details for a crawl job.
+This method should be implemented by subclasses to send information regarding a failed job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_id</strong> (<a class="reference internal" href="MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><em>StoreProductId</em></a>) – The job ID associated with the failed crawl.</p></li>
+<li><p><strong>process_time</strong> (<em>int</em>) – The time it took to process the job.</p></li>
+<li><p><strong>error_msg</strong> (<em>str</em>) – The error message describing the failure.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_success">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">send_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><span class="pre">StoreProductId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.send_success" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to send success details for a crawl job.
+This method should be implemented by subclasses to send information about a successfully processed job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_id</strong> (<a class="reference internal" href="MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><em>StoreProductId</em></a>) – The job ID associated with the successfully processed crawl.</p></li>
+<li><p><strong>amount</strong> (<em>float</em>) – The crawled amount.</p></li>
+<li><p><strong>currency</strong> (<em>str</em>) – The currency associated with the crawled amount.</p></li>
+<li><p><strong>process_time</strong> (<em>int</em>) – The time it took to process the job.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.test_connection">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">test_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#crawler.queue_handler.IMessageQueueProducer.IMessageQueueProducer.test_connection" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to test the connection to the data source.
+This method should be implemented by subclasses to check if the connection to the
+data source is still active and return whether it is successful or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the connection is active, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="IMessageQueueClient.html" class="btn btn-neutral float-left" title="Client Message Queue Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MessageDataObjects.html" class="btn btn-neutral float-right" title="Data Structures for a Message Object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, CogniPrice Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

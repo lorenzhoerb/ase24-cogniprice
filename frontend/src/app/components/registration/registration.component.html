@@ -1,0 +1,134 @@
+<div class="row no-gutters">
+
+  <div class="col no-gutters">
+    <div class="left-side">
+      <div class="cloud bubble-1">
+        <p>Automate pricing, set rules, and view price information with ease.</p>
+      </div>
+      <div class="cloud bubble-2">
+        <p>Goodbye to price monitoring. Focus on growth!</p>
+      </div>
+      <div class="cloud bubble-3">
+        <p>Boost sales with smarter pricing and competitor tracking.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col no-gutters">
+    <div class="right-side">
+      <div class="login-box">
+        <h2 class="cogniprice-title">Cogniprice</h2>
+        <div class="line-with-text">
+          <span>Sign Up</span>
+        </div>
+
+        <div *ngIf="error" >
+          <p class="error-message">{{ errorMessage }}</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="registrationForm">
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              id="email"
+              type="email"
+              formControlName="email"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
+              <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</small>
+              <small *ngIf="registrationForm.get('email')?.errors?.['email']">Enter a valid email.</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              id="password"
+              type="password"
+              formControlName="password"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.invalid">
+              <small *ngIf="registrationForm.get('password')?.errors?.['required']">
+                Password is required.
+              </small>
+              <small *ngIf="!registrationForm.get('password')?.errors?.['required'] && registrationForm.get('password')?.errors?.['minlength']">
+                Password must be at least 8 characters long.
+              </small>
+              <small *ngIf="!registrationForm.get('password')?.errors?.['required'] && !registrationForm.get('password')?.errors?.['minlength'] && registrationForm.get('password')?.errors?.['pattern']">
+                Password must contain at least one special character.
+              </small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              id="passwordConfirmation"
+              type="password"
+              formControlName="passwordConfirmation"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('passwordConfirmation')?.touched && registrationForm.get('passwordConfirmation')?.invalid">
+              <small *ngIf="registrationForm.get('passwordConfirmation')?.errors?.['required']">Password Confirmation is required.</small>
+              <small *ngIf="isSubmitted && !passwordsMatch">Passwords do not match.</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group bigger-margin-bottom">
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              id="username"
+              type="text"
+              formControlName="username"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('username')?.touched && registrationForm.get('username')?.invalid">
+              <small>Username must be at least 3 characters long with only letters or numbers.</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('firstName')?.touched && registrationForm.get('firstName')?.invalid">
+              <small>First Name is required and can only contain letters.</small>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              required
+            />
+            <mat-error class="input-hint" *ngIf="registrationForm.get('lastName')?.touched && registrationForm.get('lastName')?.invalid">
+              <small>Last Name is required and can only contain letters.</small>
+            </mat-error>
+          </mat-form-field>
+
+
+          <button type="submit">Register</button>
+        </form>
+
+        <div class="center-align">
+          <a (click)="goToLogin()" class="login-link">Already a member? Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

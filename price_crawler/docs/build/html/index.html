@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CogniPrice - Web Crawler Documentation &mdash; CogniPrice  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Guides" href="howto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            CogniPrice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawler/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Parsers/impl/impl_parsers.html">Implemented Website Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Queue_Handler/impl/impl_msg_queues.html">Implemented Message Queue Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawler.html">Web Crawler Functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Web Crawler Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers.html">Website Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queue_handler.html">Message Queue Handler</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">CogniPrice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CogniPrice - Web Crawler Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cogniprice-web-crawler-documentation">
+<h1>CogniPrice - Web Crawler Documentation<a class="headerlink" href="#cogniprice-web-crawler-documentation" title="Link to this heading"></a></h1>
+<p>This project is a <strong>scalable, modular web crawling application designed for extracting and processing price data from various websites</strong>. It provides functionalities for efficient queue handling, robust data fetching, and website-specific parsing, all while adhering to robots.txt rules. The project leverages Kafka (but not limited to) for message queue management, making it well-suited for high-throughput data pipelines.</p>
+<p>The documentation structure is organized into distinct modules:</p>
+<ul class="simple">
+<li><p><strong>Guides</strong>: Lists some guides for how to setup the crawler, add a custom website parser or add a message queue handler.</p></li>
+<li><p><strong>Configuration</strong>: Specifies which configurations can be set for the web crawler.</p></li>
+<li><p><strong>Implemented Website Parsers</strong>: Shows the implemented website parsers for which the crawler can extract product prices.</p></li>
+<li><p><strong>Implemented Message Queue Handlers</strong>: Show the implemented message queue handlers from which the crawler gets crawl jobs and stores crawl job results.</p></li>
+<li><p><strong>Web Crawler Architecture</strong>: Provides an overview of the web crawler architecture.</p></li>
+<li><p><strong>Web Crawler</strong>: Defines basic web crawler functionalities, such as identifying which website is being crawled or to fetch the html page from a website.</p></li>
+<li><p><strong>Web Crawler Utils</strong>: Configuration management, logging, and robots.txt compliance.</p></li>
+<li><p><strong>Parsers</strong>: Defines an interface for parsing the content of websites and implements it for some common Websites like Shopify and WooCommerce.</p></li>
+<li><p><strong>Message Queue Handler</strong>: Defines an interface for the communication with message queues and implements it for Kafka-based message queue operations.</p></li>
+</ul>
+<p>The crawler can be configured via a <cite>config.ini</cite> file and uses a <cite>requirements.txt</cite> file for managing dependencies. Logs are maintained in the <cite>logs</cite> directory, and the main entry point is <cite>main.py</cite>.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto/web_crawler_setup.html">Setup the Web Crawler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/update_docs.html">Update the Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto/create_parser.html">Create a new Website Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawler/config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/config.html#general">[General]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/config.html#kafka">[Kafka]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/config.html#crawler">[Crawler]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/config.html#selenium">[Selenium]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Parsers/impl/impl_parsers.html">Implemented Website Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Parsers/impl/ShopifyParser.html">Shopify Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Parsers/impl/WoocommerceParser.html">Woocommerce Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Parsers/impl/GeminiParser.html">Generic Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Queue_Handler/impl/impl_msg_queues.html">Implemented Message Queue Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Queue_Handler/impl/KafkaClient.html">Kafka Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queue_Handler/impl/KafkaProducer.html">Kafka Producer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawler.html">Web Crawler Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/DataFetcher.html">Data Fetcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/PlatformIdentifier.html">Platform Identifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_crawler/CrawlerExceptions.html">Crawler Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Web Crawler Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Utils/ConfigReader.html">Configuration Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Utils/LoggingUtil.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Utils/RobotsChecker.html">Robots.txt Checker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parsers.html">Website Parser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Parsers/IParser.html">Website Parser Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Parsers/ParserHelper.html">Parser Helper</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="queue_handler.html">Message Queue Handler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Queue_Handler/IMessageQueueClient.html">Queue Client Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queue_Handler/IMessageQueueProducer.html">Queue Producer Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Queue_Handler/MessageDataObjects.html">Message Queue Object Data Structures</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="howto.html" class="btn btn-neutral float-right" title="Guides" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, CogniPrice Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+.left-side, .right-side {
+  height: 100vh;
+  width: 100%;
+}
+
+.right-side {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-image: url('../../../../public/background.png');
+  background-repeat: no-repeat;
+  background-position: top right; /* Position the background on the top-right */
+  background-size: 100% 100%; /* Image will cover only the right half of the body */
+}
+
+.left-side {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; /* Evenly spaces the bubbles */
+  align-items: center; /* Centers bubbles horizontally */
+}
+
+.cloud {
+  height: fit-content; /* Control the size */
+  max-width: 300px;
+  padding: 20px;
+  aspect-ratio: 1.8;
+  display: flex; /* Enable flexbox */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  text-align: center; /* Center text inside the cloud */
+  --g: radial-gradient(50% 50%, #000 98%, #0000) no-repeat;
+  mask: var(--g) 100% 100%/30% 60%, var(--g) 70% 0/50% 100%, var(--g) 0 100%/36% 68%, var(--g) 27% 18%/26% 40%, linear-gradient(#000 0 0) bottom/67% 58% no-repeat;
+  -webkit-mask: var(--g) 100% 100%/30% 60%, var(--g) 70% 0/50% 100%, var(--g) 0 100%/36% 68%, var(--g) 27% 18%/26% 40%, linear-gradient(#000 0 0) bottom/67% 58% no-repeat;
+  background: white;
+  transition: transform 0.3s ease; /* Smooth transitions for hover or dynamic effects */
+}
+
+.cloud p {
+  margin: 0; /* Remove default paragraph margins */
+  padding: 60px 10px 0; /* Add padding at the top (first value) to move text down */
+  font-size: 1rem; /* Adjust font size */
+  color: black; /* Ensure text color contrasts well */
+  white-space: normal; /* Allow text to wrap */
+  overflow-wrap: break-word; /* Ensure words wrap when necessary */
+}
+
+.cloud:hover {
+  transform: scale(1.2) translateY(-10px); /* Only scale and move vertically on hover */
+}
+
+.bubble-1 {
+  transform: translateX(50%); /* Slightly shift to the right */
+}
+
+.bubble-2 {
+  transform: translateX(-50%); /* Slightly shift to the left */
+}
+
+.bubble-3 {
+  transform: translateX(50%); /* Slightly shift to the right */
+}
+
+/* Responsive adjustments */
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .left-side {
+    display: none; /* Hides the left-side on smaller screens */
+  }
+
+  .right-side {
+    width: 100vw; /* Ensure the right side takes full width */
+  }
+}
+
+/* The login box */
+.login-box {
+  width: 90%;
+  max-width: 600px; /* Limit the max width */
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+
+}
+
+/* Title styling */
+h2 {
+  margin-bottom: 5rem;
+  color: #FFFFFF;
+}
+
+.input-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.line-with-text {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%
+}
+
+.line-with-text::before,
+.line-with-text::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #FFFFFF; /* Solid line */
+  margin: 0 10px; /* Spacing between line and text */
+}
+
+.line-with-text span {
+  font-size: 0.9rem;
+  color: #FFFFFF;
+}
+
+/* Other styling for error messages, buttons, etc. */
+.error-message {
+  color: crimson;
+  text-align: center;
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4F4F4F;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.helper-text small {
+  font-size: 1rem; /* Adjust size as needed */
+  color: black;
+  font-weight: 500;
+}
+
+.login-link {
+  text-transform: none; /* Prevent Material button uppercase */
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+}
+
+.login-link:hover {
+  text-decoration: underline; /* Adds an underline on hover */
+  cursor: pointer; /* Ensure pointer cursor on hover */
+  color: gray;
+}
+
+.center-align {
+  margin-top: 10px;
+}
+
+.input-hint {
+  font-size: 1.5em;
+  font-weight: 800;
+  color: red;
+}
+
+mat-label {
+  color: white;
+}
+
+input {
+  color: white !important;
+}
+
+.bigger-margin-bottom {
+  margin-bottom: 20px;
+}

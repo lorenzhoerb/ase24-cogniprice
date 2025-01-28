@@ -1,0 +1,8 @@
+<app-search-selector
+  [maxResults]="maxResults"
+  [displayNameMapper]="displayNameMapper"
+  [searchEndpoint]="searchProducts.bind(this)"
+  [label]="label"
+  (entitySelected)="entitySelected.emit($event)"
+>
+</app-search-selector>

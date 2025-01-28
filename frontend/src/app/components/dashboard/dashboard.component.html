@@ -1,0 +1,139 @@
+<div class="container">
+  <!-- Search Bar and Category Dropdown -->
+  <div class="filters-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Search Products</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput (input)="onSearch($event)" [(ngModel)]="searchQuery" placeholder="Search by name or category">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select (selectionChange)="onCategoryChange($event.value)" [(ngModel)]="selectedCategory">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button class="add-products-button custom-green-button" [routerLink]="'/add-product'">
+      Add Products
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="no-results-message">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <!-- No Products State -->
+  <div *ngIf="!isLoading && products.length === 0 && searchQuery === '' && selectedCategory === ''; else productListEmpty" class="no-products-container">
+    <div class="no-products-screen">
+      <h2>No Products Found!</h2>
+      <p>Start adding your favorite products to view them here!</p>
+      <img src="/not-found.png" alt="No Products" class="no-products-image">
+      <button [routerLink]="'/add-product'" mat-raised-button color="primary" class="add-product-button" >
+        Add Your First Product
+      </button>
+    </div>
+  </div>
+
+  <!-- Product List Section (conditionally displayed) -->
+  <ng-template #productListEmpty>
+    <!-- Product Cards -->
+    <div *ngIf="!isLoading">
+      <div class="product-list">
+        <mat-card *ngFor="let product of products" class="product-card">
+          <div class="product-row" (click)="viewDetails(product.productId)">
+            <!-- Thumbnail Section -->
+            <div class="product-thumbnail">
+              <img mat-card-image [src]="getImage(product)" alt="{{ product.productName }}" class="product-image" draggable="false">
+            </div>
+
+            <!-- Product Details Section -->
+            <div class="product-details">
+              <h3 class="product-name">{{ product.productName }}</h3>
+              <p class="product-category">Category: {{ product.category }}</p>
+
+              <!-- Price Cards -->
+              <div class="price-cards" *ngIf="hasPrices(product)">
+                <mat-card class="price-card lowest-price-card">
+                  <mat-card-header>
+                    <mat-card-title>Lowest Price</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-content">
+                    <p class="competitor">
+                      {{ product.lowestPrice ? product.lowestPrice.competitorName : product.highestPrice.competitorName }}
+                    </p>
+                    <p class="price">
+                      {{ (product.lowestPrice ? product.lowestPrice.price : product.highestPrice.price) | currency: (product.lowestPrice ? product.lowestPrice.currency : product.highestPrice.currency) }}
+                    </p>
+                    <p class="price-time">
+                      {{ (product.lowestPrice ? product.lowestPrice.priceTime : product.highestPrice.priceTime) | date: 'short' }}
+                    </p>
+                  </mat-card-content>
+                </mat-card>
+
+                <mat-card class="price-card highest-price-card">
+                  <mat-card-header>
+                    <mat-card-title>Highest Price</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content class="mat-card-content">
+                    <p class="competitor">
+                      {{ product.highestPrice ? product.highestPrice.competitorName : product.lowestPrice.competitorName }}
+                    </p>
+                    <p class="price">
+                      {{ (product.highestPrice ? product.highestPrice.price : product.lowestPrice.price) | currency: (product.highestPrice ? product.highestPrice.currency : product.lowestPrice.currency) }}
+                    </p>
+                    <p class="price-time">
+                      {{ (product.highestPrice ? product.highestPrice.priceTime : product.lowestPrice.priceTime) | date: 'short' }}
+                    </p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+              <div class="price-cards" *ngIf="!hasPrices(product)">
+                <p>No Stores linked to this Product.
+                  <a [routerLink]="['/add-product']" [state]="{ product: product }" style="color: blue; text-decoration: underline;">Here you can add a store :)</a>
+                </p>
+              </div>
+
+              <div class="price-cards" *ngIf="hasPrices(product) == null">
+                <p>No Stores linked to this Product.
+                  <a [routerLink]="['/add-product']" [state]="{ product: product }" style="color: blue; text-decoration: underline;">Here you can add a store :)</a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <mat-card-actions class="product-buttons">
+            <button mat-button color="accent" (click)="viewDetails(product.productId)">View Details</button>
+            <button mat-button color="accent" (click)="addWebhook(product.productId)"><mat-icon>webhook</mat-icon>Add Webhook</button>
+            <button mat-button color="warn" (click)="removeProductFromWatchlist(product.productId)" class="remove-button">
+              <mat-icon>delete_outline</mat-icon>
+              Remove
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <!-- No Results Message -->
+      <div *ngIf="products.length === 0" class="no-results-message">
+        <p>No products found for your search criteria.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="products.length > 0" class="custom-paginator">
+        <button class="paginator-button" (click)="goToPreviousPage()" [disabled]="currentPage === 0">&lt;</button>
+        <span class="paginator-info">Page</span>
+        <input id="pageInput" class="page-jump-input" type="number" [value]="currentPage + 1" (change)="onPageInputChange($event)"/>
+        <span class="paginator-info">of {{ totalPages }}</span>
+        <button class="paginator-button" (click)="goToNextPage()" [disabled]="currentPage === totalPages - 1">&gt;</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

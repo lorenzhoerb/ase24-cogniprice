@@ -1,0 +1,42 @@
+<!-- Loading State -->
+
+<div *ngIf="isLoading" class="loading-container">
+  <div class="no-results-message">
+    <p>Loading...</p>
+  </div>
+</div>
+
+<div *ngIf="!isLoading">
+  <mat-grid-list cols="12" gutterSize="16px" rowHeight="20px">
+    <!-- Title Row -->
+    <mat-grid-tile colspan="12" rowspan="2">
+      <h1 class="product-title mat-headline-3">{{ product?.productName }}</h1>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="12" rowspan="1">
+      <h1 class="product-gtin mat-headline-3">GTIN: {{ product?.gtin }}</h1>
+    </mat-grid-tile>
+
+    <!-- Product Image Row -->
+    <mat-grid-tile colspan="6" rowspan="20">
+      <div class="product-image-container">
+        <img [src]="getImage()"
+             alt="{{ product?.productName }}"
+             class="product-image">
+      </div>
+    </mat-grid-tile>
+
+  <!-- Product Details -->
+  <mat-grid-tile colspan="6" rowspan="20">
+    <div class="product-row">
+      <app-product-details-card [product]="product"></app-product-details-card>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="12">
+
+  </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="product-graph">
+    <app-price-graph [productId]="productId"></app-price-graph>
+  </div>
+</div>

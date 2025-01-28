@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Queue Producer for Kafka &mdash; CogniPrice  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Web Crawler Architecture" href="../../crawler_architecture.html" />
+    <link rel="prev" title="Queue Client for Kafka" href="KafkaClient.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            CogniPrice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../howto.html">Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../web_crawler/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Parsers/impl/impl_parsers.html">Implemented Website Parsers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="impl_msg_queues.html">Implemented Message Queue Handlers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="KafkaClient.html">Kafka Client</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kafka Producer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../crawler_architecture.html">Web Crawler Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../web_crawler.html">Web Crawler Functionalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Web Crawler Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers.html">Website Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../queue_handler.html">Message Queue Handler</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CogniPrice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="impl_msg_queues.html">Implemented Message Queue Handlers</a></li>
+      <li class="breadcrumb-item active">Queue Producer for Kafka</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Queue_Handler/impl/KafkaProducer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="queue-producer-for-kafka">
+<h1>Queue Producer for Kafka<a class="headerlink" href="#queue-producer-for-kafka" title="Link to this heading"></a></h1>
+<p>The <a class="reference external" href="#crawler.queue_handler.KafkaProducer.KafkaProducer">KafkaProducer</a> class fully implements all the necessary functions required by the <a class="reference internal" href="../IMessageQueueProducer.html#my-reference-label2"><span class="std std-ref">Producer Message Queue Interface</span></a>. It is then used to facilitate the communication with a Kafka message queue in order to send back crawl job results.</p>
+<dl class="py class" id="module-crawler.queue_handler.KafkaProducer">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crawler.queue_handler.KafkaProducer.</span></span><span class="sig-name descname"><span class="pre">KafkaProducer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../Utils/ConfigReader.html#crawler.utils.ConfigReader.ConfigReader" title="crawler.utils.ConfigReader.ConfigReader"><span class="pre">ConfigReader</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer.connect" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to establish a connection to the data source (e.g., Kafka broker).
+This method should be implemented by subclasses to initiate the connection and return
+the status of the connection attempt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the connection is successfully established, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer.disconnect" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to disconnect from the data source (e.g., Kafka broker).
+This method should be implemented by subclasses to properly handle the disconnection process
+and release any resources associated with the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer.send_failure">
+<span class="sig-name descname"><span class="pre">send_failure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><span class="pre">StoreProductId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer.send_failure" title="Link to this definition"></a></dt>
+<dd><p>Send a failure message to the Kafka topic.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer.send_success">
+<span class="sig-name descname"><span class="pre">send_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../MessageDataObjects.html#crawler.queue_handler.MessageDataObjects.StoreProductId" title="crawler.queue_handler.MessageDataObjects.StoreProductId"><span class="pre">StoreProductId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer.send_success" title="Link to this definition"></a></dt>
+<dd><p>Send a success message to the Kafka topic.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crawler.queue_handler.KafkaProducer.KafkaProducer.test_connection">
+<span class="sig-name descname"><span class="pre">test_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#crawler.queue_handler.KafkaProducer.KafkaProducer.test_connection" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to test the connection to the data source.
+This method should be implemented by subclasses to check if the connection to the
+data source is still active and return whether it is successful or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the connection is active, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="KafkaClient.html" class="btn btn-neutral float-left" title="Queue Client for Kafka" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../crawler_architecture.html" class="btn btn-neutral float-right" title="Web Crawler Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, CogniPrice Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

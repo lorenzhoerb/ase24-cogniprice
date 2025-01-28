@@ -1,0 +1,42 @@
+<div class="dialog-banner">
+  <h2>Upload Products</h2>
+</div>
+
+<div mat-dialog-content class="batch-import-dialog">
+  <div class="left-panel">
+    <h3>Upload your product file</h3>
+
+    <div *ngIf="!fileName" class="dropzone" appDrag (files)="onFileDropped($event)">
+      <div class="text-wrapper">
+        <div *ngIf="!fileName" class="centered">
+          Drag and drop your Excel file or
+          <a (click)="selectFile.click()" class="browse-button">browse</a> a file. (.xlsx, .xls)
+
+          <input type="file" style="display: none;" #selectFile id="excel-upload" (change)="onFileUpload($event)" accept=".xlsx,.xls">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="fileName" class="file-preview-container">
+      <p class="file-name">{{ fileName }}</p>
+      <button class="remove-file-button" type="button" (click)="removeFile()">&times;</button>
+    </div>
+  </div>
+
+  <!-- Right: Download Sample Excel Section -->
+  <div class="right-panel">
+    <h3>Download Sample Excel</h3>
+    <p>Click below to download a sample Excel template for batch import.</p>
+    <button mat-raised-button color="primary" (click)="downloadSampleExcel()">Download Template</button>
+  </div>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  <ul>
+    <li *ngFor="let error of errorMessage">{{ error }}</li>
+  </ul>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-raised-button color="primary" [disabled]="!file" (click)="importFile()">Import</button>
+  <button mat-raised-button mat-dialog-close (click)="onClose()">Cancel</button>
+</div>

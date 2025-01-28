@@ -1,0 +1,99 @@
+<mat-toolbar color="primary" class="mat-navbar">
+  <!-- Brand Logo -->
+  <span class="mat-navbar-title">
+    <a routerLink="/" class="cogniprice-title brand-logo">CogniPrice</a>
+  </span>
+
+  <span class="spacer"></span>
+
+  <!-- Sidebar Icons -->
+  <button mat-icon-button class="icon-button"
+          id="watchlist-button"
+          [matTooltip]="'Watchlist'"
+          [routerLink]="'/analytics'"
+          aria-label="Watchlist"
+          routerLinkActive="highlight"
+          [routerLink]="'/dashboard'"
+          [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>bookmark_outline</mat-icon>
+  </button>
+
+  <button mat-icon-button class="icon-button"
+          id="view-products-button"
+          [matTooltip]="'View Products'"
+          [routerLink]="'/products'"
+          aria-label="View Products"
+          routerLinkActive="highlight"
+          [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>monitor</mat-icon>
+  </button>
+
+
+  <button mat-icon-button class="icon-button"
+          id="create-competitor-button"
+          [matTooltip]="'Create Competitor'"
+          [routerLink]="'/create-competitor'"
+          aria-label="Create Competitor"
+          routerLinkActive="highlight"
+          [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>storefront</mat-icon>
+  </button>
+
+  <!-- Dynamic Pricing Icon -->
+  <button mat-icon-button class="icon-button"
+          id="dynamic-pricing-button"
+          [matTooltip]="'Dynamic Pricing'"
+          [routerLink]="'/dynamic-pricing'"
+          aria-label="Dynamic Pricing"
+          routerLinkActive="highlight"
+          [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>price_change</mat-icon>
+  </button>
+
+  <!-- Notifications Icon -->
+  <!--<button mat-icon-button class="icon-button" aria-label="Notifications">
+    <mat-icon>notifications</mat-icon>
+  </button>-->
+
+  <!-- Competitor (globe) Icon -->
+  <button mat-icon-button
+          id="view-competitors-button"
+          [matTooltip]="'Competitors'"
+          [routerLink]="'/competitors'"
+          class="icon-button"
+          aria-label="Competitors"
+          routerLinkActive="highlight"
+          [routerLinkActiveOptions]="{exact: true}">
+    <mat-icon>travel_explore</mat-icon>
+  </button>
+
+  <!-- Profile Dropdown Trigger -->
+  <button mat-icon-button
+          id="profile-button"
+          class="icon-button"
+          [matMenuTriggerFor]="profileMenu"
+          aria-label="Profile Menu"
+          [ngClass]="{'highlight': isActive}">
+    <mat-icon>person</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- Profile Menu -->
+<mat-menu #profileMenu="matMenu">
+  <!-- Profile Header -->
+  <div class="profile-header menu-icon-container" mat-menu-item disabled>
+    <mat-icon class="menu-icon">person</mat-icon>
+    <span class="username-display">({{ username }})</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item id="userProfileButton" [routerLink]="'/' + id + '/profile/details'" (click)="setActive(true)">
+    <mat-icon class="menu-icon">manage_accounts</mat-icon>
+    <span>User Settings</span>
+  </button>
+
+  <button mat-menu-item id="signOutButton" (click)="openLogoutDialog()">
+    <mat-icon class="menu-icon">exit_to_app</mat-icon>
+    <span>Sign Out</span>
+  </button>
+</mat-menu>

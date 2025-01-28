@@ -1,0 +1,224 @@
+.container {
+  padding: 16px;
+  margin: auto;
+  max-width: 1200px;
+}
+
+.no-products-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.no-products-screen {
+  text-align: center;
+  max-width: 500px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.no-products-screen h2 {
+  font-size: 26px;
+  color: #673ab7;
+  margin-bottom: 15px;
+}
+
+.no-products-screen p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.no-products-image {
+  width: 200px;
+  height: auto;
+  margin: 20px auto;
+}
+
+.add-product-button {
+  margin-top: 10px;
+}
+
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  height: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space out content vertically */
+  width: 100%;
+  margin: 16px 32px 32px 32px;
+  height: 150px;
+}
+
+
+.price-cards {
+  display: flex; /* Use flexbox for layout */
+  gap: 16px; /* Add spacing between cards */
+  width: 100%; /* Ensure the container spans the full width */
+}
+
+.price-card {
+  flex: 1; /* Make the cards evenly split the available space */
+  max-width: calc(50% - 8px); /* Adjust for gap to prevent overflow */
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.mat-card-header {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.mat-card-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.mat-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px !important;
+}
+
+.price, .competitor, .price-time {
+  margin: 0 8px;
+  font-size: 1rem;
+  width: fit-content;
+}
+
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-right: 16px;
+}
+
+.product-thumbnail img {
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.product-info {
+  flex-grow: 1;
+  margin-left: 16px;
+}
+
+.product-info p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.product-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.product-category {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+
+.product-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.product-actions button {
+  color: #673ab7;
+  border: 1px solid #673ab7;
+  border-radius: 25px;
+  padding: 8px 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.product-actions button:hover {
+  background-color: #673ab7;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 16px 0px 16px;
+}
+
+.filters-container mat-form-field {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+}
+
+.add-products-button {
+  height: 56px; /* Match the height of mat-form-field */
+  min-width: 200px; /* Optional: ensure a minimum width for uniformity */
+  padding: 0 24px; /* Same horizontal padding as Material input fields */
+  box-sizing: border-box; /* Ensure consistent box model */
+}
+
+.custom-green-button {
+  background-color: #00C300; /* Green color */
+  color: black;
+  border: none;
+  font-weight: bold;
+  border-radius: 4px; /* Match input field border radius */
+  text-transform: none; /* Keep text normal case */
+}
+
+.custom-green-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.product-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-button {
+  font-size: medium;
+}

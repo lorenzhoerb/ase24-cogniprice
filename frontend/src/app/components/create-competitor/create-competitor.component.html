@@ -1,0 +1,35 @@
+<div class="container">
+
+  <!-- Competitor Form Box (Visible when showForm is true) -->
+  <div class="competitor-form-box">
+    <h2 class="competitor-title">Create Competitor</h2>
+    <div class="line-with-text">
+      <span>Competitor Details</span>
+    </div>
+
+    <form [formGroup]="competitorForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="input-group">
+        <mat-label>Competitor Name</mat-label>
+        <input matInput id="name" formControlName="name" placeholder="Enter competitor's name" />
+        <mat-hint class="input-hint" *ngIf="competitorForm.get('name')?.invalid && competitorForm.get('name')?.touched">
+          Competitor name must be between 1 and 255 characters.
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-group">
+        <mat-label>Competitor Hostname</mat-label>
+        <input matInput id="hostname" formControlName="hostname" placeholder="Enter competitor's hostname" />
+        <mat-hint *ngIf="competitorForm.get('hostname')?.invalid && competitorForm.get('hostname')?.touched">
+          Hostname must be valid and conform to RFC 1123, and must be 255 characters long at most.
+        </mat-hint>
+      </mat-form-field>
+
+      <button type="submit"
+              [disabled]="competitorForm.invalid"
+              [ngClass]="{'disabled-button': competitorForm.invalid, 'enabled-button': competitorForm.valid}">
+        Create
+      </button>
+    </form>
+
+  </div>
+</div>

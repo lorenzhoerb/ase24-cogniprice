@@ -1,0 +1,109 @@
+.container {
+  padding: 16px;
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 5rem;
+  row-gap: 1rem;
+}
+
+
+.form-grid > .divider {
+  grid-column: 1 / -1; /* Span the divider across the whole row */
+  border-bottom: 1px solid #ddd; /* Divider line across the entire row */
+  margin: 8px 0; /* Optional: Adds some spacing before and after the divider */
+}
+
+
+.row-title {
+  font-weight: bold; /* Style for row titles */
+  white-space: nowrap; /* Prevents text from wrapping */
+  align-self: start;
+}
+
+.position-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  align-items: center;
+}
+
+.position-custom-first-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.position-custom {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scope-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.position-custom-second-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.submit-buttons {
+  margin-bottom: 0.4em;
+}
+
+.small-field {
+ width: 150px;
+}
+
+mat-radio-button {
+  padding-bottom: 20px;
+}
+
+.position-text {
+  padding-bottom: 20px;
+}
+
+.limit-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+mat-error {
+  width: 100%;
+}
+
+.limits {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+

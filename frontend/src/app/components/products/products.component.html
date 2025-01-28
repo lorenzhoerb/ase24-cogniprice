@@ -1,0 +1,70 @@
+<div class="container">
+
+    <!-- Search Bar -->
+    <div class="filters-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Search Products</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (input)="onSearch($event)" [(ngModel)]="searchQuery" placeholder="Search by name or gtin">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select (selectionChange)="onCategoryChange($event.value)" [(ngModel)]="selectedCategory">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div *ngIf="isLoading" class="no-results-message">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+    <!-- Product List -->
+  <div class *ngIf="!isLoading">
+    <div class="product-list">
+      <mat-card *ngFor="let product of products" class="product-card">
+        <div class="product-row" (click)="viewDetails(product.id)">
+          <!-- Thumbnail Section -->
+          <div class="product-thumbnail">
+            <img mat-card-image
+                 [src]="getImage(product)"
+                 alt="{{ product.name }}" class="product-image" draggable="false">
+          </div>
+          <!-- Product Details Section -->
+          <div class="product-details">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-category">Category: {{ product.category }}</p>
+            <p *ngIf="product.productUrl" class="product-url">
+              <a [href]="product.productUrl"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 style="color: blue; text-decoration: underline;"
+                 (click)="$event.stopPropagation()">
+                View on Competitor's Site
+              </a>
+            </p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div *ngIf="products.length === 0" class="no-results-message">
+      <p>No products found for your search criteria.</p>
+    </div>
+
+    <!-- Pagination (only visible if products are found) -->
+    <div *ngIf="products.length > 0" class="custom-paginator">
+      <button class="paginator-button" (click)="goToPreviousPage()" [disabled]="currentPage === 0">&lt;</button>
+      <span class="paginator-info">Page</span>
+      <input id="pageInput" class="page-jump-input" type="number" [value]="currentPage + 1" (change)="onPageInputChange($event)" />
+      <span class="paginator-info">of {{ totalPages }}</span>
+      <button class="paginator-button" (click)="goToNextPage()" [disabled]="currentPage === totalPages - 1">&gt;</button>
+    </div>
+  </div>
+</div>

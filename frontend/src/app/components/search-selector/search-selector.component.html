@@ -1,0 +1,15 @@
+<mat-form-field class="full-width" appearance="outline">
+  <mat-label>{{label}}</mat-label>
+  <input
+    matInput
+    [formControl]="searchControl"
+    [placeholder]="label"
+    [matAutocomplete]="auto"
+    (focus)="searchControl.setValue('')"
+  >
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onEntityClick($event.option.value)">
+    <mat-option *ngFor="let entity of entities" [value]="entity">
+      {{ displayNameMapper(entity) }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

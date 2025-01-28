@@ -1,0 +1,31 @@
+canvas {
+  max-width: 100%;
+  margin-bottom: 50px;
+  // height: 400px;
+}
+.price-history-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  margin-bottom: 20px; /* Add spacing below the title/buttons */
+}
+
+.price-history-title {
+  margin: 0; /* Remove default margin */
+  text-align: center;
+  font-size: 1.5rem; /* Adjust title size */
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px; /* Add spacing between buttons */
+  margin-top: 10px; /* Add spacing between title and buttons */
+}
+
+.graph-canvas {
+  margin-bottom: 20px;
+}
+
+.bottom-filler {
+  height: 1px;
+}

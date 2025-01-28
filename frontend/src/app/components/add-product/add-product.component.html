@@ -1,0 +1,149 @@
+<div class="add-product-container">
+  <h1>Add Product</h1>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="addProductForm">
+    <!-- Product Name -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Product Name</mat-label>
+      <input matInput placeholder="Enter product name" name="name" formControlName="name" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onProductSelected($event)">
+        <mat-option *ngFor="let product of filteredProducts" [value]="product.name">
+          {{ product.name }}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-error *ngIf="addProductForm.get('name')?.errors">{{ getErrorMessage('name') }}</mat-error>
+
+    </mat-form-field>
+
+    <!-- GTIN -->
+    <mat-form-field appearance="outline" class="full-width" >
+      <mat-label>GTIN</mat-label>
+      <input matInput placeholder="Enter GTIN" formControlName="gtin">
+      <mat-error *ngIf="addProductForm.get('gtin')?.errors">{{ getErrorMessage('gtin') }}</mat-error>
+
+    </mat-form-field>
+
+    <!-- Product Category -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Product Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="addProductForm.get('category')?.errors">{{ getErrorMessage('category') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Image Upload -->
+
+    <div class="image-upload">
+      <label for="image-upload">Upload Product Image</label>
+      <div *ngIf="!addProductForm.get('image')?.value && !imagePreviewUrl" class="dropzone" appDrag (files)="fileDropped($event)">
+        <div class="text-wrapper">
+          <div class="centered">
+            Drag and drop your file or <a (click)="selectFile.click()" class="browse-button" [ngClass]="{ disabled: productSelected }">browse</a> a file
+          </div>
+
+        </div>
+      </div>
+
+      <input type="file" style="display: none;" #selectFile id="image-upload" (change)="onImageUpload($event)" accept="image/*">
+
+      <!--
+      <div *ngIf="product.image" class="image-preview-container">
+        <img  [src]="product.image" alt="Uploaded Product Image" class="preview-image">
+        <button class="remove-image-button" type="button" (click)="removeImage()">&times;</button>
+      </div>
+      -->
+      <div *ngIf="imagePreviewUrl" class="image-preview-container">
+        <img
+          [src]="imagePreviewUrl"
+          alt="Uploaded Product Image"
+          class="preview-image">
+        <button
+          *ngIf="!productSelected"
+          class="remove-image-button"
+          type="button"
+          (click)="removeImage()">
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <button *ngIf="productSelected" class="reset-button centered" type="button" (click)="resetPreselectedFields()">
+      Reset Autocomplete Fields
+    </button>
+
+
+    <!-- Optional Direct Linking with a Competitor -->
+    <div class="line-with-text">
+      <span>Optional direct linking with a Competitor</span>
+    </div>
+
+    <!-- Competitor Selection -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Competitor</mat-label>
+      <mat-select formControlName="competitor">
+        <mat-option *ngFor="let competitor of competitors" [value]="competitor.id">
+          {{ competitor.name }}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="addProductForm.errors?.['competitorUrlError']
+      && addProductForm.get('url')?.value">
+        If you provide a Product URL, you must also assign a Competitor.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- URL Input -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Product URL</mat-label>
+      <input matInput placeholder="Enter product URL" formControlName="url">
+
+      <mat-error *ngIf="addProductForm.get('url')?.hasError('pattern')">
+        Please enter a valid URL.
+      </mat-error>
+      <mat-error *ngIf="addProductForm.get('url')?.hasError('maxlength')">
+        URL cannot exceed 255 characters.
+      </mat-error>
+
+      <mat-error *ngIf="addProductForm.errors?.['competitorUrlError']
+      && addProductForm.get('competitor')?.value && addProductForm.get('competitor')?.value != -1">
+        If you assign a Competitor, you must also provide a Product URL.
+      </mat-error>
+      <mat-error *ngIf="addProductForm.get('url')?.errors">{{ getErrorMessage('url') }}</mat-error>
+    </mat-form-field>
+
+    <hr style="margin-bottom: 30px; border: none; border-top: 1px solid #ccc;">
+
+    <!-- Create Webhook Button -->
+    <button
+      class="webhook-button"
+      [ngClass]="{ active: webhookActive }"
+      type="button"
+      (click)="toggleWebhookStatus()"
+    >
+      {{ webhookActive ? 'Webhook Active' : 'Add to Webhook' }}
+    </button>
+
+    <!-- Submit Button -->
+    <button
+      class="add-product-button"
+      type="submit"
+
+      [ngClass]="{ 'invalid-button': addProductForm.invalid }"
+    >
+      Add Product
+    </button>
+
+    <button
+      class="add-batch-button"
+      type="button"
+
+      (click)="openBatchImportDialogue()"
+    >
+      Import a Batch of Products
+    </button>
+  </form>
+</div>

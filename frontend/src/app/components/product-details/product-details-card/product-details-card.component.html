@@ -1,0 +1,55 @@
+<mat-card class="price-card">
+  <mat-card-content>
+    <mat-grid-list cols="12" gutterSize="16px" rowHeight="20px">
+      <div *ngIf="hasPrices">
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="small-title">Current lowest price</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="price-value">{{ product.lowestPrice.price | currency: product.lowestPrice.currency }}</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <span class="small-title">On</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="10">
+          <span class="competitor">{{ product.lowestPrice.competitorName }}</span>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="12"></mat-grid-tile>
+
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="small-title">Current highest price</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="price-value">{{ product.highestPrice?.price | currency: product.highestPrice.currency }}</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <span class="small-title">On</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="10">
+          <span class="competitor">{{ product.highestPrice.competitorName }}</span>
+        </mat-grid-tile>
+      </div>
+
+      <mat-grid-tile colspan="12"></mat-grid-tile>
+
+      <div>
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="small-title">Current pricing strategy</span>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="12" rowspan="1">
+          <span class="price-value">No pricing strategy used yet.</span>
+        </mat-grid-tile>
+      </div>
+    </mat-grid-list>
+  </mat-card-content>
+
+  <!--<mat-card-actions>
+    <button mat-fab class="edit-btn" (click)="editPriceStrategy()" matTooltip="Edit pricing strategy">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-fab class="delete-btn" (click)="deleteFromWatchlist()" matTooltip="Delete from watchlist">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>-->
+</mat-card>

@@ -1,0 +1,36 @@
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Increase gap for spacing between elements */
+  padding: 20px; /* Add padding to the modal container */
+  box-sizing: border-box; /* Ensure padding doesn't affect the container's size */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px; /* Add space above the action buttons */
+}
+
+h2 {
+  margin-bottom: 16px; /* Add space below the heading */
+}
+
+/* Prevent the scrollbar from appearing unnecessarily */
+.modal-container::-webkit-scrollbar {
+  display: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 16px; /* Add spacing between the error and the form */
+  padding: 8px;
+  background-color: #ffe6e6; /* Light red background */
+  border: 1px solid #ff4d4d; /* Darker red border */
+  border-radius: 4px;
+}

@@ -1,0 +1,86 @@
+.mat-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #4d8ebc;
+}
+
+.brand-logo {
+  color: white;
+}
+
+.icon-button {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  // margin-right: 50px;
+}
+
+mat-icon {
+  margin-top: 15px;
+  height: 50px;
+  width: 50px;
+  font-size: 1.7em;
+}
+
+.menu-icon {
+  font-size: 1.8em;
+  margin-top: 0px;
+}
+
+.menu-icon-container {
+  vertical-align: center;
+}
+
+.icon-left {
+  margin-right: 1.5em;
+}
+
+.mat-navbar-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  margin-left: 16px;
+}
+
+.spacer {
+  flex: 1 1 auto; /* Push content to the right */
+}
+
+.username-display {
+  font-size: 1rem;
+  text-align: left;
+  color: black;
+}
+
+mat-menu-item {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  background-color: white;
+}
+
+mat-menu-item mat-icon {
+  margin-right: 8px;
+}
+
+mat-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.highlight {
+  background-color: rgba(0, 0, 0, 0.1);  /* Optional: Add background highlight */
+  color: #2196F3;  /* Change the color of the icon */
+}
+
+.icon-button.mat-icon-button.highlight mat-icon {
+  color: #2196F3; /* Change the color of the icon when it's active */
+}
+
+
+
+

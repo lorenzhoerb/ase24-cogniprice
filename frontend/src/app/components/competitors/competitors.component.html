@@ -1,0 +1,47 @@
+<div class="container">
+  <mat-grid-list cols="12" gutterSize="16px" rowHeight="50px">
+    <!-- Title Row -->
+    <mat-grid-tile colspan="12" rowspan="2">
+      <h1 class="competitors-title mat-headline-3">Competitors</h1>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="filters-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Search Competitors</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput (input)="onSearch($event)" [(ngModel)]="searchQuery" placeholder="Search by name or hostname">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="no-results-message">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && competitors.length == 0" class="no-competitors-container">
+    <div class="no-results-message">
+      <p>No competitors yet...</p>
+      <button mat-raised-button color="primary" (click)="navigateToCreateCompetitor()">
+        Create Competitor
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="filteredCompetitors.length > 0" class="competitors-list">
+    <mat-card *ngFor="let competitor of filteredCompetitors" class="competitor-card">
+      <mat-card-content>
+        <!-- Title: Top Center -->
+        <h3 class="competitor-name">{{ competitor.name }}</h3>
+
+        <!-- URL: Middle Center -->
+        <div>
+          <a [href]="competitor.hostname" target="_blank" class="competitor-url">{{ competitor.hostname }}</a>
+        </div>
+        <!-- Button: Bottom Center -->
+        <button class="redirect-button" (click)="viewProducts(competitor.id)">View Products</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

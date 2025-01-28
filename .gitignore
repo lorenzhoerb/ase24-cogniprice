@@ -1,0 +1,13 @@
+### IntelliJ IDEA ###
+.idea
+.venv
+log
+/crawler/tests/kafka_test_setup/connectors/
+/crawler/logs/*
+**/__pycache__/
+.vscode/
+.DS_Store
+config.dev.ini
+config.prod.ini
+k8n/**
+!k8n/.gitkeep

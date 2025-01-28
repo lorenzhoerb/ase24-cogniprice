@@ -1,0 +1,171 @@
+stages:
+  - build
+  - test
+  - push
+  - deploy
+
+variables:
+  MAVEN_IMAGE: maven:3.9.4-eclipse-temurin-21-alpine
+  NODE_IMAGE: node:22
+  CI_REGISTRY: registry.reset.inso-w.at
+  CI_PROJECT_PATH: $CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  MAVEN_REPO: backend/.m2/repository/
+
+# Cache Maven and npm dependencies
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - $MAVEN_REPO
+    - frontend/node_modules/
+
+# Build job
+build_backend:
+  stage: build
+  image: $MAVEN_IMAGE
+  script:
+    - cd backend
+    - mvn clean install -Dmaven.repo.local=$MAVEN_REPO -DskipTests -B -DskipTests
+    - ls -l $MAVEN_REPO
+  artifacts:
+    paths:
+      - $MAVEN_REPO
+      - backend/target/
+
+build_frontend:
+  stage: build
+  image: $NODE_IMAGE
+  script:
+    - cd frontend
+    - npm install  # Install the dependencies
+    - npm run build --prod  # Build the Angular app for production
+  artifacts:
+    paths:
+      - frontend/dist/frontend/browser # Save the frontend build output for the next stages
+  only:
+    - master
+
+test_backend:
+  stage: test
+  image: $MAVEN_IMAGE
+  services:
+    - name: timescale/timescaledb:latest-pg15  # Use the database service for backend testing
+      alias: postgres
+      command: ["postgres", "-c", "listen_addresses=0.0.0.0"]
+  variables:
+    POSTGRES_DB: cogniprice_db_test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    SPRING_PROFILES_ACTIVE: "ci"  # Use the 'ci' profile for testing
+  script:
+    - cd backend
+    - mvn test -Dmaven.repo.local=$MAVEN_REPO -Dtest.output.format=junit
+  artifacts:
+    reports:
+      junit: backend/target/surefire-reports/*.xml
+    when: always  # Ensure the artifact is saved even if the job fails
+  dependencies:
+    - build_backend  # Use artifacts from the build job
+
+push_crawler:
+  stage: push
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [ "" ]
+  variables:
+    DOCKER_CONFIG: /kaniko/.docker
+  script:
+    # Authenticate with GitLab Container Registry using CI_JOB_TOKEN
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "$CI_REGISTRY_USER" "$CI_JOB_TOKEN" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+    # Build the Docker image using Kaniko and push it to the registry
+    - echo "Building Python Docker image with Kaniko"
+    - /kaniko/executor --context $CI_PROJECT_DIR/price_crawler --dockerfile Dockerfile --destination registry.reset.inso-w.at/$CI_PROJECT_PATH/crawler:$CI_PIPELINE_ID --cache=true --cache-dir=/kaniko/cache
+    - /kaniko/executor --context $CI_PROJECT_DIR/price_crawler --dockerfile Dockerfile --destination registry.reset.inso-w.at/$CI_PROJECT_PATH/crawler:$latest --cache=true --cache-dir=/kaniko/cache
+  only:
+    - master
+
+push_backend:
+  stage: push
+  image: $MAVEN_IMAGE
+  needs: [build_backend, test_backend]
+  script:
+    - cd backend
+    - mvn -B jib:build -Djib.to.image=registry.reset.inso-w.at/$CI_PROJECT_PATH/backend -Djib.to.tags=$CI_PIPELINE_ID -Djib.to.auth.username=$CI_REGISTRY_USER -Djib.to.auth.password=$CI_REGISTRY_PASSWORD
+  only:
+    - master
+
+deploy_frontend:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  needs: [build_frontend]
+  script:
+    - echo "Configuring kubectl..."
+    - kubectl config set-cluster k8s-cluster --server=$K8S_SERVER --certificate-authority=$K8S_CA_CERT
+    - kubectl config set-credentials deployer --token=$K8S_TOKEN
+    - kubectl config set-context k8s-context --cluster=k8s-cluster --user=deployer
+    - kubectl config use-context k8s-context
+
+    - kubectl apply -f k8n/kubernetes-frontend.yaml -n 24ws-ase-pr-qse-02
+    - kubectl apply -f k8n/kubernetes-ingress.yaml -n 24ws-ase-pr-qse-02
+    # Wait for the pod to be ready
+    - echo "Waiting for pod to be ready..."
+    - kubectl rollout status deployment/cogniprice-frontend -n 24ws-ase-pr-qse-02
+
+    # Get the name of the pod
+    - POD_NAME=$(kubectl get pods -n 24ws-ase-pr-qse-02 -l app=cogniprice-frontend -o jsonpath='{.items[0].metadata.name}')
+
+    # Copy the custom Nginx configuration file to the pod
+    - echo "Copying custom Nginx configuration..."
+    - kubectl cp default.conf $POD_NAME:/etc/nginx/conf.d/default.conf -n 24ws-ase-pr-qse-02
+
+    # Copy the dist/ files to the pod
+    - echo "Copying static files to the pod..."
+    - kubectl cp ./frontend/dist/frontend/browser/. $POD_NAME:/usr/share/nginx/html -n 24ws-ase-pr-qse-02
+
+    # Reload Nginx to apply the new configuration
+    - echo "Reloading Nginx..."
+    - kubectl exec -it $POD_NAME -n 24ws-ase-pr-qse-02 -- nginx -s reload
+  only:
+    - master
+
+deploy_backend:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  needs: [push_backend,push_crawler]
+  script:
+    - sed -i 's/:latest/:'$CI_PIPELINE_ID'/g' k8n/kubernetes-backend.yaml
+    - cat k8n/kubernetes-backend.yaml
+    - kubectl apply -f k8n/kubernetes-backend.yaml
+    # Verify backend deployment status
+    - echo "Final deployment status check..."
+    - kubectl get pods -n 24ws-ase-pr-qse-02
+  only:
+    - master
+
+deploy_postgres:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl apply -f k8n/kubernetes-db.yaml
+    - echo "Final deployment status check..."
+    - kubectl get pods -n 24ws-ase-pr-qse-02
+  only:
+    - never #should not be deployed again
+
+deploy_zookeeper_kafka:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl apply -f k8n/kubernetes-zookeeper-kafka.yaml
+    - echo "Final deployment status check..."
+    - kubectl get pods -n 24ws-ase-pr-qse-02
+  only:
+    - never # should only be deployed once
+
+restart:
+  stage: deploy
+  image: bitnami/kubectl:latest
+  script:
+    - kubectl rollout restart deployment cogniprice-backend
+  only:
+    - never

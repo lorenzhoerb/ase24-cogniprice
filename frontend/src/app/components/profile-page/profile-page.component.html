@@ -1,0 +1,70 @@
+<div>
+  <mat-grid-list cols="12" gutterSize="16px" rowHeight="50px">
+    <!-- Title Row -->
+    <mat-grid-tile colspan="12" rowspan="2">
+      <h1 class="profile-title mat-headline-3">My Profile</h1>
+    </mat-grid-tile>
+
+    <!-- API Access Button Row -->
+    <mat-grid-tile colspan="8">
+      <div class="profile-row">
+        <mat-icon class="profile-icon" fontIcon="person"></mat-icon>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4">
+      <button mat-raised-button color="primary" id="api-access-btn"  (click)="accessApi()" class="api-access-btn">
+        <mat-icon>import_export</mat-icon>API Access
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="8">
+      <div class="profile-row">
+        <span class="profile-text">Username: {{ userDetails?.username }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" class="text-right">
+      <button mat-raised-button color="accent" (click)="accessWebhook()" id="webhook-btn" class="webhook-btn">
+        <mat-icon>webhook</mat-icon>Webhook
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="8">
+      <div class="profile-row">
+        <span class="profile-text">First Name: {{ userDetails?.firstName }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" class="text-right">
+      <button mat-raised-button color="accent" (click)="triggerWebhook()" id="trigger-webhook-btn" class="webhook-btn" [disabled]="isWebhookTriggering">
+        <mat-icon>settings_ethernet</mat-icon>Trigger Webhook
+      </button>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="8">
+      <div class="profile-row">
+        <span class="profile-text">Last Name: {{ userDetails?.lastName }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+
+    <mat-grid-tile colspan="8">
+      <div class="profile-row">
+        <span class="profile-text">Email: {{ userDetails?.email }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+
+    <mat-grid-tile colspan="5">
+      <button mat-raised-button color="primary" class="edit-profile-btn" (click)="openEditProfile()">
+        Edit Profile
+      </button>
+      <button mat-raised-button color="accent" class="change-password-btn" (click)="openChangePasswordDialog()">
+        Change Password
+      </button>
+      <button mat-raised-button color="danger" class="delete-profile-btn" (click)="deleteAccount()">
+        Delete Account
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+
+</div>

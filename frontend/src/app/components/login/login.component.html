@@ -1,0 +1,54 @@
+<div class="row no-gutters">
+
+  <div class="col no-gutters">
+    <div class="left-side">
+      <div class="cloud bubble-1">
+        <p>Automate pricing, set rules, and view price information with ease.</p>
+      </div>
+      <div class="cloud bubble-2">
+        <p>Goodbye to price monitoring. Focus on growth!</p>
+      </div>
+      <div class="cloud bubble-3">
+        <p>Boost sales with smarter pricing and competitor tracking.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col no-gutters">
+    <div class="right-side">
+      <div class="login-box">
+        <h2 class="cogniprice-title">Cogniprice</h2>
+
+        <div class="line-with-text">
+          <span>Login</span>
+        </div>
+
+        <div *ngIf="errorMessage" >
+          <p class="error-message">{{ errorMessage }}</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Username</mat-label>
+            <input matInput id="username" type="text" formControlName="username" placeholder="Enter your username" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-group">
+            <mat-label>Password</mat-label>
+            <input matInput id="password" type="password" formControlName="password" placeholder="Enter your password" required />
+            <mat-hint class="input-hint" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+              Password must be at least 8 characters long.
+            </mat-hint>
+          </mat-form-field>
+
+          <button type="submit">Login</button>
+        </form>
+        <div class="links-container">
+          <a (click)="goToForgotPassword()" class="link">Forgot password?</a>
+          <a (click)="goToSignup()" class="link">Don't have an account yet? Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

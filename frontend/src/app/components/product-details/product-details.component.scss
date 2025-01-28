@@ -1,0 +1,56 @@
+.product-title {
+  font-family: 'Volkhov', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: black;
+}
+
+.product-gtin {
+  font-family: 'Volkhov', sans-serif;
+  font-size: 1.5rem;
+  //font-weight: bold;
+  margin: 0;
+  color: #686868;
+}
+
+.product-graph {
+  width: 80%; /* Take 90% of the parent container */
+  margin: 0 auto; /* Center horizontally */
+}
+
+.product-image-container {
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  overflow: hidden; /* Prevent the image from overflowing */
+  max-height: 100%; /* Ensure the container doesn’t grow too tall */
+}
+
+.product-image {
+  max-width: 100%; /* Ensure the image doesn’t exceed the container width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image fits inside the container */
+  background-color: transparent;
+  border-radius: 15px;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 600px) { /* Small screens */
+  .product-image {
+    width: 80%; /* Reduce image size */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) { /* Medium screens */
+  .product-image {
+    width: 90%; /* Slightly larger on medium screens */
+  }
+}
+
+@media (min-width: 1025px) { /* Large screens */
+  .product-image {
+    width: 100%; /* Full size for large screens */
+    max-width: 500px; /* Optional: Limit the maximum width */
+  }
+}

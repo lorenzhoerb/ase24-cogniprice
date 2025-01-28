@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Production
+  postgres-db:
+    container_name: cogniprice-postgres
+    image: timescale/timescaledb:latest-pg15
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cogniprice_db
+    volumes:
+      - timescale_data:/var/lib/postgresql/data  # Persist data for production
+
+    networks:
+      - cogniprice_network
+
+  # Zookeeper
+  zookeeper:
+    container_name: zookeeper
+    image: 'confluentinc/cp-zookeeper:latest'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - cogniprice_network
+
+  # Kafka
+  kafka:
+    container_name: kafka-service
+    image: 'confluentinc/cp-kafka:latest'
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:9092'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - cogniprice_network
+
+  # Backend Service
+  backend:
+    container_name: backend
+    image: backend:latest
+    build:
+      context: ./backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: "prod"
+      BASE_URL: "http://localhost:4200"
+
+    depends_on:
+      - postgres-db
+      - kafka
+    networks:
+      - cogniprice_network
+
+  # Frontend Service
+  frontend:
+    container_name: frontend
+    image: frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile_Local
+    restart: always
+    ports:
+      - "4200:4200"  # Map host port 4200 to container port 80
+    networks:
+      - cogniprice_network
+
+  #crawler
+  crawler:
+    container_name: crawler
+    build:
+      context: ./price_crawler
+    restart: always
+    depends_on:
+      - postgres-db
+      - kafka
+    networks:
+      - cogniprice_network
+    environment:
+      ENV: prod
+
+volumes:
+  timescale_data:
+
+networks:
+  cogniprice_network:
+    driver: bridge

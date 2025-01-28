@@ -1,0 +1,88 @@
+.card {
+  padding: 1rem 1rem;
+}
+
+.filters {
+}
+
+.search-field {
+  width: 100%;
+}
+
+.pricing-rule-table {
+  background-color: white;
+}
+
+.demo-table {
+  width: 100%;
+}
+
+.mat-column-demo-position {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.my-form-field {
+  margin-bottom: -1.25em;
+}
+
+.mat-column-demo-name {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+.mat-column-demo-weight {
+  font-style: italic;
+}
+
+.mat-column-demo-symbol {
+  width: 32px;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.status-chip {
+  cursor: pointer !important;
+}
+
+.status-chip {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.status-chip.selected  {
+  background-color: #4285F4;
+  color: white;
+  border-color: #1976d2;
+}
+
+.status-chip.selected * {
+  color: white !important; /* Use !important if necessary to override any other color rules */
+}
+
+.fixed-width {
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-row:hover {
+  cursor: pointer;
+  background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+.hover-row:hover .fixed-width {
+  text-decoration: underline;
+}
+
+.add-pricing-rule {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
