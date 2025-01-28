@@ -206,3 +206,7 @@ The following endpoints are available for managing pricing rules. For detailed i
 ## Additional Information
 
 For complete API definitions, request/response schemas, and example payloads, visit the [Swagger documentation](localhost:8080/swagger-ui.html). Be sure to include appropriate authentication headers when accessing these endpoints.
+
+## Demo
+
+![Pricing Rule Demo](images/price-rule-demo.png)
